@@ -1,0 +1,17 @@
+import { Pipe, PipeTransform } from '@angular/core';
+ 
+@Pipe({
+  name: 'hotelFilter',
+  standalone: true
+})
+export class HotelFilterPipe implements PipeTransform {
+  transform(hotels: any[], searchTerm: string): any[] {
+    if (!hotels || !Array.isArray(hotels)) return [];
+    if (!searchTerm) return hotels;
+    return hotels.filter(hotel =>
+      hotel.address.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      hotel.hotelName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+}
+ 
