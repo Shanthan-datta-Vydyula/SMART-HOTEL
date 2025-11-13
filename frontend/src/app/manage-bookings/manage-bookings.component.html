@@ -89,8 +89,8 @@
       </div>
       <div class="card-body">
         <div class="customer-section">
-          <h5 class="customer-name">{{ booking.userId.name }}</h5>
-          <p class="customer-email">{{ booking.userId.email }}</p>
+          <h5 class="customer-name">{{ booking.guests[0].fullName }}</h5>
+          <p class="customer-email">{{ booking.guests[0].email }}</p>
         </div>
         <div class="hotel-section">
           <h6 class="hotel-name">{{ booking.hotelId.hotelName }}</h6>
