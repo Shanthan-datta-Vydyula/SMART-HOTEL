@@ -43,67 +43,105 @@ import { Router } from '@angular/router';
           </div>
         </div>
       </div>
-      
-      <!-- Action Buttons -->
-      <div class="mt-5">
-        <h3 class="mb-4 text-secondary">Choose Your Login Type</h3>
-        <p class="text-muted mb-4">Select the appropriate login based on your role</p>
-        
-        <div class="row justify-content-center mb-4">
-          <div class="col-md-5 mb-3">
-            <div class="card h-100 border-0 shadow-sm guest-card">
-              <div class="card-body text-center p-4">
-                <i class="bi bi-person-circle text-primary fs-1 mb-3"></i>
-                <h5 class="card-title">Login</h5>
-                <p class="card-text text-muted mb-3">Book hotels and manage your reservations</p>
-                <button class="btn btn-primary btn-lg px-4 py-2" (click)="navigateToGuestLogin()">
-                  <i class="bi bi-box-arrow-in-right"></i> Login
-                </button>
-              </div>
-            </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer mt-5 py-4">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-4 mb-4">
+            <h5 class="fw-bold mb-3">
+              <i class="bi bi-building text-primary"></i> Smart Hotel
+            </h5>
+            <p class="text-muted small">Your trusted partner in finding and booking the perfect hotel accommodation.</p>
           </div>
-          <div class="col-md-5 mb-3">
-            <div class="card h-100 border-0 shadow-sm manager-card">
-              <div class="card-body text-center p-4">
-                <i class="bi bi-shield-check text-success fs-1 mb-3"></i>
-                <h5 class="card-title">Manager Login</h5>
-                <p class="card-text text-muted mb-3">Access hotel management system</p>
-                <button class="btn btn-success btn-lg px-4 py-2" (click)="navigateToManagerLogin()">
-                  <i class="bi bi-key"></i> Manager Login
-                </button>
-              </div>
+          <div class="col-md-4 mb-4">
+            <h6 class="fw-bold mb-3">Quick Links</h6>
+            <ul class="list-unstyled">
+              <li><a (click)="scrollToTop()" class="footer-link small">Home</a></li>
+              <li><a (click)="navigateToAbout()" class="footer-link small">About Us</a></li>
+              <li><a (click)="navigateToContact()" class="footer-link small">Contact Us</a></li>
+              <li><a (click)="navigateToLogin()" class="footer-link small">Login</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 mb-4">
+            <h6 class="fw-bold mb-3">Follow Us</h6>
+            <div class="social-links">
+              <a href="#" class="footer-link me-3"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="footer-link me-3"><i class="bi bi-twitter"></i></a>
+              <a href="#" class="footer-link me-3"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="footer-link"><i class="bi bi-linkedin"></i></a>
             </div>
           </div>
         </div>
-        
-        <div class="register-section">
-          <p class="text-muted">Don't have an account?</p>
-          <button class="btn btn-outline-secondary btn-lg px-4 py-2" (click)="navigateToRegister()">
-            <i class="bi bi-person-plus"></i> Create New Account
-          </button>
+        <hr class="bg-light opacity-25">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <p class="text-muted small mb-0">&copy; 2025 Smart Hotel Booking. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            
+          </div>
         </div>
       </div>
-    </div>
+    </footer>
   `,
   styles: [`
-    .guest-card:hover, .manager-card:hover {
-      transform: translateY(-2px);
-      transition: transform 0.2s;
+    .footer {
+      background: linear-gradient(135deg, #b8c6db 0%, #a4b0bd 100%);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      margin-top: auto;
+      color: #2c3e50;
+    }
+    
+    .footer-link {
+      color: #2c3e50;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-link:hover {
+      color: #0066cc;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    
+    .social-links a:hover {
+      color: #0066cc !important;
+      transform: translateY(-3px);
+      transition: all 0.3s ease;
+    }
+    
+    footer h5, footer h6 {
+      color: #2c3e50;
+    }
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
   `]
 })
 export class HomeComponent {
   constructor(private router: Router) {}
 
-  navigateToGuestLogin() {
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  navigateToAbout() {
+    // Navigate to about page if exists, or show message
+    alert('About Us page coming soon!');
+  }
+
+  navigateToContact() {
+    // Navigate to contact page if exists, or show message
+    alert('Contact Us page coming soon!');
+  }
+
+  navigateToLogin() {
     this.router.navigate(['/guest-login']);
-  }
-
-  navigateToManagerLogin() {
-    this.router.navigate(['/manager-login']);
-  }
-
-  navigateToRegister() {
-    this.router.navigate(['/register']);
   }
 }
