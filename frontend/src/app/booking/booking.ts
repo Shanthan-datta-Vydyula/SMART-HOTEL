@@ -45,6 +45,7 @@ export class Booking implements OnInit {
 
     this.userService.getHotelById(this.hotel._id).subscribe({
       next: (hotelData) => {
+        console.log('Fetched hotel data:', hotelData);
         this.hotelFeedback = hotelData;
       },
       error: (error) => {

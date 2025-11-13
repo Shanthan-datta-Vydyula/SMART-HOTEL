@@ -63,7 +63,7 @@ export const getHotelById= async(req,res,next)=>{
     const hotelId= req.params.hotelId;
     console.log("Hotel ID:", hotelId);
     try{console.log(hotelId);
-        const hotelDetails= await Hotel.findById(hotelId);
+        const hotelDetails= await Hotel.findById(hotelId).populate('feedbacks');
         console.log(hotelDetails);
         if(!hotelDetails){
             const error = new Error("Hotel not found");
@@ -72,7 +72,7 @@ export const getHotelById= async(req,res,next)=>{
         }
         
         
-        return res.status(200).json( {hotelDetails: hotelDetails} );
+        return res.status(200).json( hotelDetails) ;
 
     }
     catch(error){
