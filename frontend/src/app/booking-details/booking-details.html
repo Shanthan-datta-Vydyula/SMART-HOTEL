@@ -8,20 +8,33 @@
   <p>Almost done! Just fill in the <strong>*</strong> required info</p>
  
   <label>First Name *</label>
-  <input type="text" name="firstName" [(ngModel)]="bookingData.fullName" required />
+  <input type="text" #firstName="ngModel" name="firstName" [(ngModel)]="bookingData.fullName" required minlength="2" maxlength="50" />
+  <small *ngIf="firstName.invalid && firstName.touched" class="error-text">
+    <span *ngIf="firstName.errors?.['required']">First name is required</span>
+    <span *ngIf="firstName.errors?.['minlength']">Name must be at least 2 characters</span>
+    <span *ngIf="firstName.errors?.['maxlength']">Name cannot exceed 50 characters</span>
+  </small>
  
   <!-- <label>Last Name *</label>
   <input type="text" name="lastName" [(ngModel)]="bookingData.lastName" required />
   -->
   <label>Email Address *</label>
-  <input type="email" name="email" [(ngModel)]="bookingData.email" email required />
+  <input type="email" #email="ngModel" name="email" [(ngModel)]="bookingData.email" email required />
+  <small *ngIf="email.invalid && email.touched" class="error-text">
+    <span *ngIf="email.errors?.['required']">Email address is required</span>
+    <span *ngIf="email.errors?.['email']">Please enter a valid email address</span>
+  </small>
   <small>Confirmation email goes to this address</small>
  <label>Country/Region *</label>
-  <select name="country" [(ngModel)]="bookingData.country" required>
+  <select #country="ngModel" name="country" [(ngModel)]="bookingData.country" required>
+    <option value="">-- Select Country --</option>
     <option value="India">India</option>
     <option value="USA">USA</option>
     <option value="UK">UK</option>
   </select>
+  <small *ngIf="country.invalid && country.touched" class="error-text">
+    <span *ngIf="country.errors?.['required']">Country/Region is required</span>
+  </small>
  
   <label>Phone Number *</label>
   <div class="phone-group">
@@ -29,8 +42,12 @@
       <option value="+91">IN +91</option>
       <option value="+1">US +1</option>
     </select>
-    <input type="tel" name="phone" [(ngModel)]="bookingData.phone" required />
+    <input type="tel" #phone="ngModel" name="phone" [(ngModel)]="bookingData.phone" required pattern="[0-9]{7,15}" />
   </div>
+  <small *ngIf="phone.invalid && phone.touched" class="error-text">
+    <span *ngIf="phone.errors?.['required']">Phone number is required</span>
+    <span *ngIf="phone.errors?.['pattern']">Phone number must be 7-15 digits</span>
+  </small>
   <small>To verify your booking, and for the property to connect if needed</small>
  <button type="submit" [disabled]="bookingForm.invalid" id="btn-sum">Confirm Booking</button>
  

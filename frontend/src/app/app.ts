@@ -5,7 +5,7 @@ import { AuthService } from './services/auth.service';
 import { AuthProvider } from './services/auth.provider';
 import { SearchStateService } from './services/search-state.service';
 import { filter } from 'rxjs/operators';
-
+import { UserService } from './apiService/userService';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -27,6 +27,7 @@ export class App implements OnInit {
     private authService: AuthService, 
     private authProvider: AuthProvider,
     private searchStateService: SearchStateService
+    ,private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -114,6 +115,15 @@ export class App implements OnInit {
 
   logout() {
     
+
+    this.userService.logout().subscribe({
+      next: () => {
+        console.log('Logout successful:');
+      },
+      error: (error) => {
+        console.error('Error during logout:', error);
+      }
+    });
     this.authProvider.clearToken();
     sessionStorage.removeItem('userRole');
     

@@ -10,35 +10,43 @@
         <span *ngIf="isManagerRoute" class="manager-badge">Manager</span>
       </a>
       
-      <div class="navbar-nav ms-auto">
-        <!-- Buttons visible only when NOT logged in -->
-        <div *ngIf="!isLoggedIn" class="btn-group me-2">
-          <button class="btn btn-light" (click)="showGuestLogin()">
-            <i class="bi bi-person-circle"></i> Login
+      <!-- Hamburger Toggle (only on small screens) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- Collapsible navbar content -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav ms-auto">
+          <!-- Buttons visible only when NOT logged in -->
+          <div *ngIf="!isLoggedIn" class="btn-group me-2">
+            <button class="btn btn-light" (click)="showGuestLogin()">
+              <i class="bi bi-person-circle"></i> Login
+            </button>
+          </div>
+          <button *ngIf="!isLoggedIn" class="btn btn-outline-light" (click)="showRegister()">
+            <i class="bi bi-person-plus"></i> Register
           </button>
-        </div>
-        <button *ngIf="!isLoggedIn" class="btn btn-outline-light" (click)="showRegister()">
-          <i class="bi bi-person-plus"></i> Register
-        </button>
-        
-        <!-- Buttons visible only when logged in -->
-        <button *ngIf="isLoggedIn" class="btn btn-outline-light me-2" (click)="showMyBookings()">
-          <i class="bi bi-calendar-check"></i> 
-          {{ userRole === 'manager' ? 'Manage Bookings' : 'My Bookings' }}
-        </button>
-        <div *ngIf="isLoggedIn" class="dropdown me-2">
-          <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-            <i class="bi bi-person-circle"></i> {{userRole==='manager'? 'Manager Profile':'User Profile'}}
+          
+          <!-- Buttons visible only when logged in -->
+          <button *ngIf="isLoggedIn" class="btn btn-outline-light me-2" (click)="showMyBookings()">
+            <i class="bi bi-calendar-check"></i> 
+            {{ userRole === 'manager' ? 'Manage Bookings' : 'My Bookings' }}
           </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="showDashboard()" style="cursor: pointer;">
-              <i class="bi bi-speedometer2"></i> Dashboard
-            </a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
-              <i class="bi bi-box-arrow-right"></i> Logout
-            </a></li>
-          </ul>
+          <div *ngIf="isLoggedIn" class="dropdown me-2">
+            <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle"></i> {{userRole==='manager'? 'Manager Profile':'User Profile'}}
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" (click)="showDashboard()" style="cursor: pointer;">
+                <i class="bi bi-speedometer2"></i> Dashboard
+              </a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="logout()" style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

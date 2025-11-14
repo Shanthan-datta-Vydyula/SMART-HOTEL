@@ -26,16 +26,19 @@ const HotelSchema = new mongoose.Schema({
      
         street: {
             type: String,
-            required: [true, 'Street address is required']
+            required: [true, 'Street address is required'],
+            unique: true
         },
         city: {
             type: String,
-            required: [true, 'City is required']
+            required: [true, 'City is required'],
+            unique: true
         },
         postalCode: {
             type: String,
             required: [true, 'Postal code is required'],
-            match: [/^[0-9]{6}$/, 'Please enter a valid 6-digit postal code']
+            match: [/^[0-9]{6}$/, 'Please enter a valid 6-digit postal code'],
+            unique: true
         }
     },
     pricePerNight: {

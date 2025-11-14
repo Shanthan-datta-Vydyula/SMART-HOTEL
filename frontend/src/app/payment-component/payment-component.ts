@@ -143,17 +143,7 @@ export class PaymentComponent implements OnInit {
     
     this.closeBooking();
 
-  // @Input() userID!: string;  
-  // @Input() bookingID!: string;
-  // @Input() amount!: number;
-  // const paymentData: Payment = {
-    //   userID: this.userID,
-    //   bookingID: this.bookingID,
-    //   amount: this.amount,
-    //   paymentMethod: this.paymentMethod
-    // };
-
-
+ 
   }
 }
  

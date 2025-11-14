@@ -97,7 +97,9 @@ export class UserService{
     console.log("Adding new hotel:", hotelData);
     return this.http.post<any>(this.AddHotelUrl, hotelData);
   }
-
+  logout(){
+    return this.http.get<any>(`${this.baseUrl}/api/logout`);
+  }
   createBookingByManager(bookingData: any): Observable<any> {
     console.log("Creating booking by manager:", bookingData);
     return this.http.post<any>(this.BookingByManagerUrl, bookingData);

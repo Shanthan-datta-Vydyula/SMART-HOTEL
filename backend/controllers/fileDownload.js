@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const down = Router();
-const upload = multer();
+ 
 
 export const downloadFile =  async (req, res, next) => {
   try {

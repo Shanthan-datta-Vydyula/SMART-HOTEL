@@ -104,6 +104,7 @@ export const loginUser = async (req, res, next) => {
         error.statusCode = 500;
         next(error);
     }
+    
 }
 
 // 

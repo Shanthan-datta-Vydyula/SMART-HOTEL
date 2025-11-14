@@ -88,4 +88,39 @@
   color: #c94040;
  
 }
- 
+
+/* Validation Error Styling */
+.error-text {
+  display: block;
+  color: #c94040;
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  font-weight: 500;
+  animation: slideIn 0.3s ease-in;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Invalid input styling */
+.booking-form input.ng-invalid.ng-touched,
+.booking-form select.ng-invalid.ng-touched {
+  border-color: #c94040;
+  background-color: #fff5f5;
+}
+
+.booking-form input.ng-valid.ng-touched,
+.booking-form select.ng-valid.ng-touched {
+  border-color: #28a745;
+  background-color: #f5fff5;
+}
+
+  
