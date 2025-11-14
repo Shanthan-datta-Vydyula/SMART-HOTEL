@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ManagerAddUserService, UserBookingData } from '../services/manager-add-user.service';
 import { UserService } from '../apiService/userService';
 import { HotelService } from '../apiService/hotel.service';
-
+ 
 @Component({
   selector: 'app-manager-add-user',
   standalone: true,
@@ -14,53 +14,39 @@ import { HotelService } from '../apiService/hotel.service';
   styleUrls: ['./manager-add-user.css']
 })
 export class ManagerAddUserComponent implements OnInit {
-  @Output() close = new EventEmitter<void>();
-  @Output() userAdded = new EventEmitter<UserBookingData>();
-
+  // @Output() close = new EventEmitter<void>();
+  // @Output() userAdded = new EventEmitter<UserBookingData>();
+ 
   // Form data properties
-  userName: string = '';
-  fullName: string = '';
-  userEmail: string = '';
+   fullName: string = '';
   email: string = '';
-  userPhone: string = '';
   phone: string = '';
-
-  checkInDate: string = '';
   startDate: string = '';
-  checkOutDate: string = '';
   endDate: string = '';
-  selectedLocation: string = '';
   selectedHotel: string = '';
   selectedRoomType: string = '';
   numberOfGuests: number = 1;
   numberOfRooms: number = 1;
-
+ 
+ 
   // Validation properties
   showFormErrors: boolean = false;
-
+ 
   // Booking tracking properties
   isBookingCreated: boolean = false;
   currentBookingId: string = '';
-
+ 
   // Dropdown options
   hotels: any[] = [];
-
-  roomTypes: string[] = [
-    'Single',
-    'Double',
-    'Delux',
-    'Twin',
-    'Suite'
-  ];
-
+  roomTypes: string[] = [];
   today: string = '';
-
-  constructor(private managerAddUserService: ManagerAddUserService, private router: Router, private userService: UserService,private hotelService:HotelService) {}
-
+ 
+  constructor(private router: Router, private userService: UserService,private hotelService:HotelService) {}
+ 
   ngOnInit(): void {
-    // Initialize today's date
-    this.today = this.managerAddUserService.getTodayDate();
-
+   
+    this.today = new Date().toISOString().split('T')[0];
+ 
     this.hotelService.getHotels().subscribe({
       next: (response: any) => {
         this.hotels = response;
@@ -71,7 +57,27 @@ export class ManagerAddUserComponent implements OnInit {
       }
     });
   }
-
+ 
+  onHotelChange() {
+    // Reset room type when hotel changes
+    this.selectedRoomType = '';
+    this.roomTypes = [];
+ 
+    if (this.selectedHotel) {
+      // Find the selected hotel and get its room types
+      const selectedHotelData = this.hotels.find(hotel => hotel.hotelName === this.selectedHotel);
+      console.log('Selected hotel data:', selectedHotelData);
+      if (selectedHotelData && selectedHotelData.roomType) {
+        this.roomTypes = selectedHotelData.roomType;
+      } else {
+        // Fallback room types if not available in hotel data
+        this.roomTypes = ['Single', 'Double', 'Delux', 'Twin', 'Suite'];
+      }
+     
+      console.log('Room types for', this.selectedHotel, ':', this.roomTypes);
+    }
+  }
+ 
   onSubmit(form: any) {
     const createGuest = {
       name: this.fullName,
@@ -82,7 +88,7 @@ export class ManagerAddUserComponent implements OnInit {
         numberOfRooms: this.numberOfRooms,
       }
     }
-
+ 
     const bookingData = {
       userId: sessionStorage.getItem('userId'),
       hotelName: this.selectedHotel,
@@ -91,16 +97,16 @@ export class ManagerAddUserComponent implements OnInit {
       startDate: this.startDate,
       endDate: this.endDate,
     }
-
+ 
     console.log('Submitting booking data:', bookingData);
          
     this.userService.createBookingByManager(bookingData).subscribe({
       next: (response: any) => {
-        const bookingId = response.bookingId;
+        const bookingId = response._id;
         this.currentBookingId = bookingId;
         this.isBookingCreated = true; // Enable download button
         alert(`User booking created successfully! Booking ID: ${bookingId}`);
-        
+       
         this.showFormErrors = false;
       },
       error: (error: any) => {
@@ -110,25 +116,26 @@ export class ManagerAddUserComponent implements OnInit {
       }
     });
   }
-
+ 
   downloadInvoice() {
     // Only proceed if booking is created
     if (!this.isBookingCreated) {
       alert('Please create a booking first before downloading the invoice.');
       return;
     }
-
+ 
     // Prepare the invoice data from the current form
     const invoiceData = {
       hotelName: this.selectedHotel || 'N/A',
       bookingDate: new Date().toISOString().split('T')[0],
       guestName: this.fullName || 'N/A',
       rooms: this.numberOfRooms || 1,
-      bookingId: this.currentBookingId
+      bookingId: this.currentBookingId,
+      numberOfNights: this.getNumberOfNights()
     };
-
+ 
     console.log('Downloading invoice with data:', invoiceData);
-
+ 
     this.userService.downloadInvoice(invoiceData).subscribe({
       next: (blob: Blob) => {
         // Create a download link and trigger download
@@ -148,29 +155,29 @@ export class ManagerAddUserComponent implements OnInit {
       }
     });
   }
-
-  areDatesValid(): boolean {
-    if (!this.checkInDate || !this.checkOutDate) return false;
-    const checkIn = new Date(this.checkInDate);
-    const checkOut = new Date(this.checkOutDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    return checkIn >= today && checkOut > checkIn;
-  }
-
+ 
+  // areDatesValid(): boolean {
+  //   if (!this.startDate || !this.endDate) return false;
+  //   const checkIn = new Date(this.startDate);
+  //   const checkOut = new Date(this.endDate);
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+   
+  //   return checkIn >= today && checkOut > checkIn;
+  // }
+ 
   getNumberOfNights(): number {
-    if (!this.checkInDate || !this.checkOutDate) return 0;
-    const checkIn = new Date(this.checkInDate);
-    const checkOut = new Date(this.checkOutDate);
+    if (!this.startDate || !this.endDate) return 0;
+    const checkIn = new Date(this.startDate);
+    const checkOut = new Date(this.endDate);
     const timeDiff = checkOut.getTime() - checkIn.getTime();
     return Math.ceil(timeDiff / (1000 * 3600 * 24));
   }
-
-  onClose() {
-    this.close.emit();
-  }
-
+ 
+  // onClose() {
+  //   this.close.emit();
+  // }
+ 
   goBackToDashboard() {
     this.router.navigate(['/manager/dashboard']);
   }

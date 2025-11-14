@@ -5,21 +5,20 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import Hotel from '../models/Hotel.js';
  
-
+ 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const down = Router();
  
-
+const down = Router();
+const upload = multer();
+ 
 export const downloadFile =  async (req, res, next) => {
   try {
-    const { hotelName, bookingDate, guestName, rooms } = req.body;
-
+    const { hotelName, bookingDate, guestName, rooms, numberOfNights } = req.body;
+ 
     const pricePerRoom = await Hotel.findOne({ hotelName: hotelName });
    console.log(pricePerRoom);
-    const price = pricePerRoom.pricePerNight * parseInt(rooms);
-
+    const price = pricePerRoom.pricePerNight * parseInt(rooms) * parseInt(numberOfNights);
     const invoiceText = `
 Hotel Booking Invoice
 ----------------------
@@ -31,18 +30,18 @@ Price: ${price}
 ----------------------
 Thank you for choosing our hotel!
 `;
-
+ 
     // Create a unique filename to avoid conflicts
     const timestamp = Date.now();
     const fileName = `invoice_${timestamp}.txt`;
     const filePath = path.join(__dirname, fileName);
-    
+   
     fs.writeFileSync(filePath, invoiceText);
-
+ 
      
     res.setHeader('Content-Type', 'text/plain');
     res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
-
+ 
     res.download(filePath, fileName, (err) => {
       if (err) {
         console.error('Error sending file:', err);
