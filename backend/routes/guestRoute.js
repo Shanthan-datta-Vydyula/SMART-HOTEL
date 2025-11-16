@@ -10,7 +10,7 @@ import verifyTokenWithRoles from "../middleware/verifyWithRole.js";
 
 const guest = Router();
 
-guest.post('/guest',passport.authenticate('jwt', { session: false }), validateGuest,verifyTokenWithRoles(['user']), createGuest);
-guest.post('/createBook',passport.authenticate('jwt', { session: false }), verifyTokenWithRoles(['user']), bookingValidator, createBooking);
+guest.post('/guest',passport.authenticate('jwt', { session: false }), checkBlacklist, validateGuest,verifyTokenWithRoles(['user']), createGuest);
+guest.post('/createBook',passport.authenticate('jwt', { session: false }), checkBlacklist, verifyTokenWithRoles(['user']), bookingValidator, createBooking);
 
 export default guest;

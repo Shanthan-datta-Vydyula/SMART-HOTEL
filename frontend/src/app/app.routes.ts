@@ -2,11 +2,9 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { GuestLoginComponent } from './guest-login/guest-login.component';
- 
-import { HotelSearch } from './hotel-search/hotel-search';
+ import { HotelSearch } from './hotel-search/hotel-search';
 import { Booking } from './booking/booking';
- 
-import { ManagerDashboardComponent } from './managerdashboard/managerdashboard';
+ import { ManagerDashboardComponent } from './managerdashboard/managerdashboard';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
 import { ManagerAddUserComponent } from './manager-add-user/manager-add-user';

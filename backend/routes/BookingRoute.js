@@ -9,11 +9,11 @@ import verifyTokenWithRoles from "../middleware/verifyWithRole.js";
 
 const booking = Router();
 
-booking.get('/bookings',passport.authenticate('jwt', { session: false }),verifyTokenWithRoles(['manager']),getBookings);
+booking.get('/bookings',passport.authenticate('jwt', { session: false }),checkBlacklist,verifyTokenWithRoles(['manager']),getBookings);
 
-booking.put('/bookings/:bookingId',passport.authenticate('jwt', { session: false }),verifyTokenWithRoles(['manager']),updateBookingStatusValidator,updateBookingStatus);
+booking.put('/bookings/:bookingId',passport.authenticate('jwt', { session: false }),checkBlacklist,verifyTokenWithRoles(['manager']),updateBookingStatusValidator,updateBookingStatus);
 
-booking.post('/booking',passport.authenticate('jwt', { session: false }),verifyTokenWithRoles(['manager']),bookingValidator,createBookingByManager)
+booking.post('/booking',passport.authenticate('jwt', { session: false }),checkBlacklist,verifyTokenWithRoles(['manager']),bookingValidator,createBookingByManager)
 export default booking;
 
 

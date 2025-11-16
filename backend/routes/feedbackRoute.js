@@ -7,7 +7,7 @@ import verifyTokenWithRoles from "../middleware/verifyWithRole.js";
 
 const feedback = Router();
 
-feedback.post('/book', passport.authenticate('jwt', { session: false }), verifyTokenWithRoles(['user']), getBookingsForUser);
-feedback.post('/feedback', passport.authenticate('jwt', { session: false }),verifyTokenWithRoles(['user']), createFeedback);
+feedback.post('/book', passport.authenticate('jwt', { session: false }), checkBlacklist, verifyTokenWithRoles(['user']), getBookingsForUser);
+feedback.post('/feedback', passport.authenticate('jwt', { session: false }), checkBlacklist, verifyTokenWithRoles(['user']), createFeedback);
 
 export default feedback;
