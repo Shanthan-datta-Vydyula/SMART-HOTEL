@@ -5,9 +5,7 @@ import { Router } from '@angular/router';
 import { HotelFilterPipe } from "./hotel-search.pipe";
 import { GuestSelectorComponent } from '../guest-selector/guest-selector';
 import { HotelService } from '../apiService/hotel.service';
-import { AuthProvider } from '../services/auth.provider';
 import { SearchStateService, SearchState } from '../services/search-state.service';
-import { UserService } from '../apiService/userService';
  
 @Component({
   selector: 'app-hotel-search',
@@ -30,9 +28,7 @@ export class HotelSearch implements OnInit, OnDestroy {
   constructor(
     private hotelService: HotelService, 
     private router: Router, 
-    private authProvider: AuthProvider,
-    private searchStateService: SearchStateService,
-    private userService: UserService
+    private searchStateService: SearchStateService
   ) {}
    
   ngOnInit(): void {

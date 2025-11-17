@@ -69,11 +69,6 @@ export class ManagerDashboardComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  // onUserAdded(bookingData: UserBookingData) {
-  //   console.log('Parent received new user booking:', bookingData);
-  //   this.totalBookingsCreated++;
-  //   this.backToHub();
-  // }
 
   onHotelManaged() {
     console.log('Parent received hotel management update');

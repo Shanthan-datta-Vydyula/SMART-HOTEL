@@ -118,7 +118,7 @@ export class ManagerAddHotelComponent implements OnInit {
 
     // Call API to add hotel
     this.userService.addHotel(this.hotel).subscribe({
-      next: (response) => {
+      next: () => {
         this.submittedHotel = { ...this.hotel };
         alert('Hotel added successfully!');
         this.resetForm();

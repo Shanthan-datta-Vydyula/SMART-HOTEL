@@ -63,7 +63,12 @@
           </p>
         </div>
         <div class="card-footer bg-transparent">
-          <button class="btn btn-outline-success btn-sm me-2" (click)="openFeedback(booking)">
+          <button 
+            class="btn btn-outline-success btn-sm me-2" 
+            (click)="openFeedback(booking)"
+            [disabled]="booking.status !== 'confirmed'"
+            [title]="booking.status === 'confirmed' ? 'Submit feedback' : 'Feedback only available for confirmed bookings'"
+          >
             <i class="bi bi-chat-left-text"></i> Feedback
           </button>
           <!-- <button *ngIf="booking.status === 'confirmed'" class="btn btn-outline-danger btn-sm" (click)="cancelBooking(booking)">

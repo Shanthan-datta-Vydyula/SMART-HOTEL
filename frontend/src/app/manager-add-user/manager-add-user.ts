@@ -105,7 +105,7 @@ export class ManagerAddUserComponent implements OnInit {
         const bookingId = response._id;
         this.currentBookingId = bookingId;
         this.isBookingCreated = true; // Enable download button
-        alert(`User booking created successfully! Booking ID: ${bookingId}`);
+        alert(`User booking created successfully!`);
        
         this.showFormErrors = false;
       },
